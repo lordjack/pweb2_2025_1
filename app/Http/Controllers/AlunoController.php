@@ -11,7 +11,7 @@ class AlunoController extends Controller
      */
     public function index()
     {
-        return "<h1>Aluno Controller</h1>";
+        return view('aluno.list');
     }
 
     /**
@@ -19,7 +19,7 @@ class AlunoController extends Controller
      */
     public function create()
     {
-        //
+        return view('aluno.form');
     }
 
     /**
