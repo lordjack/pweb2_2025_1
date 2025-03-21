@@ -13,3 +13,6 @@ Route::get('/aluno',
 
 Route::get('/aluno/create',
      [AlunoController::class,'create'])->name('aluno.create');
+
+Route::post('/aluno/store',
+     [AlunoController::class,'store'])->name('aluno.store');

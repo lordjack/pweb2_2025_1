@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Aluno;
 
 class AlunoController extends Controller
 {
@@ -27,7 +28,24 @@ class AlunoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nome'=>'required|min:3|max:100',
+            'cpf'=>'required|max:14',
+            'telefone'=>'nullable|min:10|max:40'
+        ],[
+            'nome.required'=>'O :attribute é obrigatório',
+            'cpf.required'=>'O :attribute é obrigatório',
+        ]);
+
+        $data = [
+            'nome'=>$request->nome,
+            'cpf'=>$request->cpf,
+            'telefone'=>$request->telefone,
+        ];
+
+        Aluno::create($data);
+
+        redirect('aluno');
     }
 
     /**
