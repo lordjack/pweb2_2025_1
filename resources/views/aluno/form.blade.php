@@ -17,6 +17,8 @@
         <input type="text" name="telefone"><br>
 
         <button type="submit">Salvar</button><br>
+        <a href="{{ url('aluno') }}">Voltar</a>
+
     </form>
 
 @stop

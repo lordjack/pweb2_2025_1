@@ -16,3 +16,7 @@ Route::get('/aluno/create',
 
 Route::post('/aluno/store',
      [AlunoController::class,'store'])->name('aluno.store');
+
+Route::delete('aluno/{id}',
+     [AlunoController::class,'destroy'])
+     ->name('aluno.destroy');

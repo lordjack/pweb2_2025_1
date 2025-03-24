@@ -12,7 +12,13 @@ class AlunoController extends Controller
      */
     public function index()
     {
-        return view('aluno.list');
+        //select * from alunos
+        $dados = Aluno::All();
+
+        return view(
+            'aluno.list',
+            ['dados' => $dados]
+        );
     }
 
     /**
@@ -29,18 +35,18 @@ class AlunoController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nome'=>'required|min:3|max:100',
-            'cpf'=>'required|max:14',
-            'telefone'=>'nullable|min:10|max:40'
-        ],[
-            'nome.required'=>'O :attribute é obrigatório',
-            'cpf.required'=>'O :attribute é obrigatório',
+            'nome' => 'required|min:3|max:100',
+            'cpf' => 'required|max:14',
+            'telefone' => 'nullable|min:10|max:40'
+        ], [
+            'nome.required' => 'O :attribute é obrigatório',
+            'cpf.required' => 'O :attribute é obrigatório',
         ]);
 
         $data = [
-            'nome'=>$request->nome,
-            'cpf'=>$request->cpf,
-            'telefone'=>$request->telefone,
+            'nome' => $request->nome,
+            'cpf' => $request->cpf,
+            'telefone' => $request->telefone,
         ];
 
         Aluno::create($data);
@@ -77,6 +83,11 @@ class AlunoController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        //  dd("teste");
+        $dado = Aluno::find($id);
+
+        $dado->delete();
+
+        return redirect('aluno');
     }
 }
