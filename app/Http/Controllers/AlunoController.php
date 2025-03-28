@@ -51,7 +51,7 @@ class AlunoController extends Controller
 
         Aluno::create($data);
 
-        redirect('aluno');
+        return redirect('aluno');
     }
 
     /**
@@ -67,7 +67,12 @@ class AlunoController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $dado = Aluno::findOrFail($id);
+
+        return view(
+            'aluno.form',
+            ['dado' => $dado]
+        );
     }
 
     /**
@@ -75,7 +80,27 @@ class AlunoController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'nome' => 'required|min:3|max:100',
+            'cpf' => 'required|max:14',
+            'telefone' => 'nullable|min:10|max:40'
+        ], [
+            'nome.required' => 'O :attribute é obrigatório',
+            'cpf.required' => 'O :attribute é obrigatório',
+        ]);
+
+        $data = [
+            'nome' => $request->nome,
+            'cpf' => $request->cpf,
+            'telefone' => $request->telefone,
+        ];
+
+        Aluno::updateOrCreate(
+            ['id' => $id],
+            $data
+        );
+
+        return redirect('aluno');
     }
 
     /**

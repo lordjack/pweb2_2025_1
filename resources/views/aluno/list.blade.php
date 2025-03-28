@@ -13,6 +13,7 @@
                 <td>CPF</td>
                 <td>Telefone</td>
                 <td>Ação</td>
+                <td>Ação</td>
             </tr>
         </thead>
         <tbody>
@@ -22,6 +23,9 @@
                     <td>{{ $item->nome }}</td>
                     <td>{{ $item->cpf }}</td>
                     <td>{{ $item->telefone }}</td>
+                    <td>
+                        <a href="{{route('aluno.edit',$item->id)}}">Editar</a>
+                    </td>
                     <td>
                         <form action="{{ route('aluno.destroy', $item->id) }}" method="post">
                             @method('DELETE')
