@@ -115,4 +115,23 @@ class AlunoController extends Controller
 
         return redirect('aluno');
     }
+
+    public function search(Request $request)
+    {
+        if (!empty($request->valor)) {
+            //select * from alunos
+            $dados = Aluno::where(
+                $request->tipo,
+                'like',
+                "%$request->valor%"
+            )->get();
+        } else {
+            $dados = Aluno::all();
+        }
+
+        return view(
+            'aluno.list',
+            ['dados' => $dados]
+        );
+    }
 }

@@ -4,7 +4,19 @@
 
     <h3>Listagem de Alunos</h3>
 
-    <a href="{{ url('aluno/create') }}">Novo</a>
+    <form action="{{ route('aluno.search') }}" method="post">
+        @csrf
+        <label for="">Tipo</label><br>
+        <select name="tipo">
+            <option value="nome">Nome</option>
+            <option value="cpf">CPF</option>
+            <option value="telefone">Telefone</option>
+        </select><br>
+        <input type="text" name="valor" placeholder="Valor">
+        <button type="submit">Buscar</button>
+        <a href="{{ url('aluno/create') }}">Novo</a>
+    </form>
+
     <table>
         <thead>
             <tr>
@@ -24,14 +36,13 @@
                     <td>{{ $item->cpf }}</td>
                     <td>{{ $item->telefone }}</td>
                     <td>
-                        <a href="{{route('aluno.edit',$item->id)}}">Editar</a>
+                        <a href="{{ route('aluno.edit', $item->id) }}">Editar</a>
                     </td>
                     <td>
                         <form action="{{ route('aluno.destroy', $item->id) }}" method="post">
                             @method('DELETE')
                             @csrf
-                            <button type="submit"
-                             onclick="return confirm('Deseja remover o registro?')">Remover</button>
+                            <button type="submit" onclick="return confirm('Deseja remover o registro?')">Remover</button>
                         </form>
                     </td>
                 </tr>

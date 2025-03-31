@@ -26,3 +26,6 @@ Route::get('/aluno/edit/{id}',
 
 Route::put('/aluno/update/{id}',
      [AlunoController::class,'update'])->name('aluno.update');
+
+Route::post('/aluno/search',
+     [AlunoController::class,'search'])->name('aluno.search');
