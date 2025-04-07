@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Aluno;
+use App\Models\CategoriaAluno;
 
 class AlunoController extends Controller
 {
@@ -26,7 +27,11 @@ class AlunoController extends Controller
      */
     public function create()
     {
-        return view('aluno.form');
+        $categorias = CategoriaAluno::orderBy('nome')->get();
+
+        return view('aluno.form',[
+            'categorias' => $categorias
+        ]);
     }
 
     /**
@@ -37,16 +42,18 @@ class AlunoController extends Controller
         $request->validate([
             'nome' => 'required|min:3|max:100',
             'cpf' => 'required|max:14',
-            'telefone' => 'nullable|min:10|max:40'
+            'telefone' => 'nullable|min:10|max:40',
+            'categoria_id' => 'required'
         ], [
             'nome.required' => 'O :attribute é obrigatório',
             'cpf.required' => 'O :attribute é obrigatório',
+            'categoria_id.required' => 'O :attribute é obrigatório',
         ]);
 
         $data = [
             'nome' => $request->nome,
             'cpf' => $request->cpf,
-            'telefone' => $request->telefone,
+            'categoria_id' => $request->categoria_id,
         ];
 
         Aluno::create($data);
@@ -67,11 +74,13 @@ class AlunoController extends Controller
      */
     public function edit(string $id)
     {
+        $categorias = CategoriaAluno::orderBy('nome')->get();
+
         $dado = Aluno::findOrFail($id);
 
         return view(
             'aluno.form',
-            ['dado' => $dado]
+            ['dado' => $dado,  'categorias' => $categorias]
         );
     }
 
@@ -83,16 +92,19 @@ class AlunoController extends Controller
         $request->validate([
             'nome' => 'required|min:3|max:100',
             'cpf' => 'required|max:14',
-            'telefone' => 'nullable|min:10|max:40'
+            'telefone' => 'nullable|min:10|max:40',
+            'categoria_id' => 'required'
         ], [
             'nome.required' => 'O :attribute é obrigatório',
             'cpf.required' => 'O :attribute é obrigatório',
+            'categoria_id.required' => 'O :attribute é obrigatório',
         ]);
 
         $data = [
             'nome' => $request->nome,
             'cpf' => $request->cpf,
             'telefone' => $request->telefone,
+            'categoria_id' => $request->categoria_id,
         ];
 
         Aluno::updateOrCreate(
