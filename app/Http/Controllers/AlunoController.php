@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CategoriaAluno;
 use Illuminate\Http\Request;
 use App\Models\Aluno;
 
@@ -26,7 +27,40 @@ class AlunoController extends Controller
      */
     public function create()
     {
-        return view('aluno.form');
+        $categorias = CategoriaAluno::orderBy('nome')->get();
+
+        return view('aluno.form', [
+            'categorias' => $categorias,
+        ]);
+    }
+
+    public function edit(string $id)
+    {
+        $dado = Aluno::findOrFail($id);
+
+        $categorias = CategoriaAluno::orderBy('nome')->get();
+
+        return view(
+            'aluno.form',
+            [
+                'dado' => $dado,
+                'categorias' => $categorias
+            ]
+        );
+    }
+
+    private function validateRequest(Request $request)
+    {
+        $request->validate([
+            'nome' => 'required|min:3|max:100',
+            'cpf' => 'required|max:14',
+            'telefone' => 'nullable|min:10|max:40',
+            'categoria_id' => 'required',
+        ], [
+            'nome.required' => 'O :attribute é obrigatório',
+            'cpf.required' => 'O :attribute é obrigatório',
+            'categoria_id.required' => 'O :attribute é obrigatório',
+        ]);
     }
 
     /**
@@ -34,20 +68,9 @@ class AlunoController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'nome' => 'required|min:3|max:100',
-            'cpf' => 'required|max:14',
-            'telefone' => 'nullable|min:10|max:40'
-        ], [
-            'nome.required' => 'O :attribute é obrigatório',
-            'cpf.required' => 'O :attribute é obrigatório',
-        ]);
+        $this->validateRequest($request);
 
-        $data = [
-            'nome' => $request->nome,
-            'cpf' => $request->cpf,
-            'telefone' => $request->telefone,
-        ];
+        $data = $request->all();
 
         Aluno::create($data);
 
@@ -65,35 +88,16 @@ class AlunoController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
-    {
-        $dado = Aluno::findOrFail($id);
 
-        return view(
-            'aluno.form',
-            ['dado' => $dado]
-        );
-    }
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
     {
-        $request->validate([
-            'nome' => 'required|min:3|max:100',
-            'cpf' => 'required|max:14',
-            'telefone' => 'nullable|min:10|max:40'
-        ], [
-            'nome.required' => 'O :attribute é obrigatório',
-            'cpf.required' => 'O :attribute é obrigatório',
-        ]);
+        $this->validateRequest($request);
 
-        $data = [
-            'nome' => $request->nome,
-            'cpf' => $request->cpf,
-            'telefone' => $request->telefone,
-        ];
+        $data = $request->all();
 
         Aluno::updateOrCreate(
             ['id' => $id],

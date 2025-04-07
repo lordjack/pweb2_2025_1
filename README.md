@@ -15,7 +15,10 @@ Código-Fonte do Projeto desenvolvido durante as aulas de programação web 2 co
 **1. Instalar as dependências do projeto**  
 `composer install`  
 
-**2. Criar as tabelas do banco de dados do projeto**  
+**2. copia e cola o .env.example e renomeia para .env**  
+`composer install`  
+
+**3. Criar as tabelas do banco de dados do projeto**  
 `php artisan migrate` 
 
 **Ou criar as tabelas e insere os registros no banco de dados do projeto**  

@@ -24,6 +24,7 @@
                 <td>Nome</td>
                 <td>CPF</td>
                 <td>Telefone</td>
+                <td>Categoria</td>
                 <td>Ação</td>
                 <td>Ação</td>
             </tr>
@@ -35,6 +36,7 @@
                     <td>{{ $item->nome }}</td>
                     <td>{{ $item->cpf }}</td>
                     <td>{{ $item->telefone }}</td>
+                    <td>{{ $item->categoria->nome ?? '' }}</td>
                     <td>
                         <a href="{{ route('aluno.edit', $item->id) }}">Editar</a>
                     </td>
