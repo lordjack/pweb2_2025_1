@@ -24,6 +24,12 @@ Código-Fonte do Projeto desenvolvido durante as aulas de programação web 2 co
 **Ou criar as tabelas e insere os registros no banco de dados do projeto**  
 `php artisan migrate --seed` 
 
+**4. Iniciar o sistema**  
+`php artisan serve`
+
+**5. Acessar o sistema**  
+`http://localhost:8000/`
+
 ----
 ## Diretorios mais usados do projeto
 #### Arquitetura de uma Aplicação em Laravel
@@ -81,12 +87,6 @@ Código-Fonte do Projeto desenvolvido durante as aulas de programação web 2 co
 
 **Habilitar o envio de arquivo para o Storage**  
 `php artisan storage:link`
-
-**Iniciar o sistema**  
-`php artisan serve`
-
-**Acessar o sistema**  
-`http://localhost:8000/`
 
 **Criando multiplos arquivos junto com o Model - Migração, Factory, Seed, Controller com Resource**  
 `php artisan make:model NomeModel -mfscr`
