@@ -16,7 +16,7 @@ Código-Fonte do Projeto desenvolvido durante as aulas de programação web 2 co
 `composer install`  
 
 **2. copia e cola o .env.example e renomeia para .env**  
-`composer install`  
+`cp .env.example .env`  
 
 **3. Criar as tabelas do banco de dados do projeto**  
 `php artisan migrate` 
