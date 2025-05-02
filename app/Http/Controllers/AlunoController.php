@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\CategoriaAluno;
 use Illuminate\Http\Request;
 use App\Models\Aluno;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class AlunoController extends Controller
 {
@@ -71,6 +72,19 @@ class AlunoController extends Controller
         $this->validateRequest($request);
 
         $data = $request->all();
+        $imagem = $request->file('imagem');
+
+        if ($imagem) {
+            $nome_arquivo = date('YmdHis') . "." . $imagem->getClientOriginalExtension();
+            $diretorio = "imagem/aluno/";
+
+            $imagem->storeAs(
+                $diretorio,
+                $nome_arquivo,
+                'public'
+            );
+            $data['imagem'] = $diretorio . $nome_arquivo;
+        }
 
         Aluno::create($data);
 
@@ -98,6 +112,19 @@ class AlunoController extends Controller
         $this->validateRequest($request);
 
         $data = $request->all();
+        $imagem = $request->file('imagem');
+
+        if ($imagem) {
+            $nome_arquivo = date('YmdHis') . "." . $imagem->getClientOriginalExtension();
+            $diretorio = "imagem/aluno/";
+
+            $imagem->storeAs(
+                $diretorio,
+                $nome_arquivo,
+                'public'
+            );
+            $data['imagem'] = $diretorio . $nome_arquivo;
+        }
 
         Aluno::updateOrCreate(
             ['id' => $id],
@@ -137,5 +164,18 @@ class AlunoController extends Controller
             'aluno.list',
             ['dados' => $dados]
         );
+    }
+
+    public function report()
+    {
+        $alunos = Aluno::orderBy('nome')->get();
+
+        $data = [
+            'titulo' => "Listagem Alunos",
+            'alunos' => $alunos,
+        ];
+
+        $pdf = Pdf::loadView('aluno.report', $data);
+        return $pdf->download('relatorio_listagem_alunos.pdf');
     }
 }

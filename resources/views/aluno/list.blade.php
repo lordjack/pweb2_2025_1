@@ -15,6 +15,8 @@
         <input type="text" name="valor" placeholder="Valor">
         <button type="submit">Buscar</button>
         <a href="{{ url('aluno/create') }}">Novo</a>
+        <a href="{{ url('aluno/report') }}">Gerar PDF</a>
+
     </form>
 
     <table>

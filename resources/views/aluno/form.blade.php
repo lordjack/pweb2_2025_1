@@ -32,12 +32,19 @@
         <select name="categoria_id">
             @foreach ($categorias as $categoria)
                 <option value="{{ $categoria->id }}"
-                    {{ old('categoria_id', $dado->categoria_id ?? '')
-                         == $categoria->id ? 'selected' : '' }}>
+                    {{ old('categoria_id', $dado->categoria_id ?? '') == $categoria->id ? 'selected' : '' }}>
                     {{ $categoria->nome }}
                 </option>
             @endforeach
         </select>
+        <br>
+        @php
+            $nome_imagem = !empty($dado->imagem) ? $dado->imagem : 'sem_imagem.jpg';
+        @endphp
+        <label for="">Imagem</label><br>
+        <img src="/storage/{{ $nome_imagem }}" width="200px" height="200px" alt="imagem">
+        <input type="file" name="imagem" value="{{ old('imagem', $dado->imagem ?? '') }}">
+        <br>
 
 
         <button type="submit">Salvar</button><br>
