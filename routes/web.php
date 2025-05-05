@@ -1,8 +1,9 @@
 <?php
 
 use App\Http\Controllers\AlunoController;
+use App\Http\Controllers\CursoController;
+use App\Http\Controllers\TurmaController;
 use Illuminate\Support\Facades\Route;
-
 
 Route::get('/', function () {
     return view('welcome');
@@ -27,8 +28,19 @@ Route::get('/aluno/edit/{id}',
 Route::put('/aluno/update/{id}',
      [AlunoController::class,'update'])->name('aluno.update');
 
-Route::post('/aluno/search',
-     [AlunoController::class,'search'])->name('aluno.search');
 
 Route::get('/aluno/report',
      [AlunoController::class,'report'])->name('aluno.report');
+
+
+Route::post('/curso/search',
+     [CursoController::class,'search'])->name('curso.search');
+Route::get('/curso/report',
+     [CursoController::class,'report'])->name('curso.report');
+Route::resource('curso', CursoController::class);
+
+Route::post('/turma/search',
+     [TurmaController::class,'search'])->name('turma.search');
+Route::get('/turma/report',
+     [TurmaController::class,'report'])->name('turma.report');
+Route::resource('turma', TurmaController::class);

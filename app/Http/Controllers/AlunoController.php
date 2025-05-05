@@ -57,10 +57,14 @@ class AlunoController extends Controller
             'cpf' => 'required|max:14',
             'telefone' => 'nullable|min:10|max:40',
             'categoria_id' => 'required',
+           // 'imagem' => 'nullable|image|mimes:png,jpeg,jpg',
         ], [
             'nome.required' => 'O :attribute é obrigatório',
             'cpf.required' => 'O :attribute é obrigatório',
             'categoria_id.required' => 'O :attribute é obrigatório',
+            'imagem.imagem' => 'O :attribute deve ser enviado',
+            'imagem.mimes' => 'A :attribute deve ser das extensões: PNG, JPEG e JPG',
+
         ]);
     }
 
