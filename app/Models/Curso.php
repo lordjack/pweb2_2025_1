@@ -18,4 +18,9 @@ class Curso extends Model
         'valor',
     ];
 
+    // Relação um para muitos com Turma
+    public function turmas()
+    {
+        return $this->hasMany(Turma::class);
+    }
 }

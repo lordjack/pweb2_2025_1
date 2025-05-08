@@ -44,3 +44,6 @@ Route::post('/turma/search',
 Route::get('/turma/report',
      [TurmaController::class,'report'])->name('turma.report');
 Route::resource('turma', TurmaController::class);
+
+Route::get('/curso/{curso}/turmas', [TurmaController::class, 'index'])->name('curso.turmas');
+Route::get('/curso/{curso}/turmas/create', [TurmaController::class, 'create'])->name('curso.turmas.create');
