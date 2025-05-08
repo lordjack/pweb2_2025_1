@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CategoriaAluno;
 use Illuminate\Http\Request;
 use App\Models\Aluno;
-use App\Models\CategoriaAluno;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class AlunoController extends Controller
 {
@@ -27,36 +28,68 @@ class AlunoController extends Controller
      */
     public function create()
     {
+
         $categorias = CategoriaAluno::orderBy('nome')->get();
 
-        return view('aluno.form',[
+        return view('aluno.form', [
             'categorias' => $categorias
         ]);
     }
 
-   private function validateRequest(Request $request)
+    public function edit(string $id)
+    {
+        $dado = Aluno::findOrFail($id);
+
+        $categorias = CategoriaAluno::orderBy('nome')->get();
+
+        return view(
+            'aluno.form',
+            [
+                'dado' => $dado,
+                'categorias' => $categorias
+            ]
+        );
+    }
+
+    private function validateRequest(Request $request)
     {
         $request->validate([
             'nome' => 'required|min:3|max:100',
             'cpf' => 'required|max:14',
             'telefone' => 'nullable|min:10|max:40',
-            'categoria_id' => 'required'
+            'categoria_id' => 'required',
+           // 'imagem' => 'nullable|image|mimes:png,jpeg,jpg',
         ], [
             'nome.required' => 'O :attribute é obrigatório',
             'cpf.required' => 'O :attribute é obrigatório',
             'categoria_id.required' => 'O :attribute é obrigatório',
+            'imagem.imagem' => 'O :attribute deve ser enviado',
+            'imagem.mimes' => 'A :attribute deve ser das extensões: PNG, JPEG e JPG',
+
         ]);
     }
-    
+
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-
         $this->validateRequest($request);
 
         $data = $request->all();
+        $imagem = $request->file('imagem');
+
+        if ($imagem) {
+            $nome_arquivo = date('YmdHis') . "." . $imagem->getClientOriginalExtension();
+            $diretorio = "imagem/aluno/";
+
+            $imagem->storeAs(
+                $diretorio,
+                $nome_arquivo,
+                'public'
+            );
+            $data['imagem'] = $diretorio . $nome_arquivo;
+        }
 
         Aluno::create($data);
 
@@ -74,17 +107,7 @@ class AlunoController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
-    {
-        $categorias = CategoriaAluno::orderBy('nome')->get();
 
-        $dado = Aluno::findOrFail($id);
-
-        return view(
-            'aluno.form',
-            ['dado' => $dado,  'categorias' => $categorias]
-        );
-    }
 
     /**
      * Update the specified resource in storage.
@@ -94,6 +117,19 @@ class AlunoController extends Controller
         $this->validateRequest($request);
 
         $data = $request->all();
+        $imagem = $request->file('imagem');
+
+        if ($imagem) {
+            $nome_arquivo = date('YmdHis') . "." . $imagem->getClientOriginalExtension();
+            $diretorio = "imagem/aluno/";
+
+            $imagem->storeAs(
+                $diretorio,
+                $nome_arquivo,
+                'public'
+            );
+            $data['imagem'] = $diretorio . $nome_arquivo;
+        }
 
         Aluno::updateOrCreate(
             ['id' => $id],
@@ -133,5 +169,18 @@ class AlunoController extends Controller
             'aluno.list',
             ['dados' => $dados]
         );
+    }
+
+    public function report()
+    {
+        $alunos = Aluno::orderBy('nome')->get();
+
+        $data = [
+            'titulo' => "Listagem Alunos",
+            'alunos' => $alunos,
+        ];
+
+        $pdf = Pdf::loadView('aluno.report', $data);
+        return $pdf->download('relatorio_listagem_alunos.pdf');
     }
 }

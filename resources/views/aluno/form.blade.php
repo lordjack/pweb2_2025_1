@@ -27,6 +27,7 @@
 
         <label for="">Telefone</label><br>
         <input type="text" name="telefone" value="{{ old('telefone', $dado->telefone ?? '') }}"><br>
+
         <label for="">Categoria</label><br>
         <select name="categoria_id">
             @foreach ($categorias as $categoria)
@@ -35,7 +36,17 @@
                     {{ $categoria->nome }}
                 </option>
             @endforeach
-        </select><br>
+        </select>
+        <br>
+        @php
+            $nome_imagem = !empty($dado->imagem) ? $dado->imagem : 'sem_imagem.jpg';
+        @endphp
+        <label for="">Imagem</label><br>
+        <img src="/storage/{{ $nome_imagem }}" width="200px" height="200px" alt="imagem">
+        <input type="file" name="imagem" value="{{ old('imagem', $dado->imagem ?? '') }}">
+        <br>
+
+
         <button type="submit">Salvar</button><br>
         <a href="{{ url('aluno') }}">Voltar</a>
 

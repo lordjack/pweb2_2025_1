@@ -17,7 +17,12 @@ class CategoriaAlunoFactory extends Factory
     public function definition(): array
     {
         return [
-            'nome' => $this->faker->unique()->randomElement(['Fundamental', 'Medio', 'Graduação', 'Pós-Graduação']),
+            'nome' => $this->faker->unique()->randomElement([
+                'FUNDAMENTAL',
+                'MÉDIO',
+                'GRADUAÇÃO',
+                'PÓS-GRADUAÇÃO'
+            ]),
             'nivel' => $this->faker->numberBetween(1, 4)
         ];
     }
