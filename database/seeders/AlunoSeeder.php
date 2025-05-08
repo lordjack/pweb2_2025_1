@@ -16,3 +16,4 @@ class AlunoSeeder extends Seeder
        Aluno::factory()->count(3)->create();
     }
 }
+

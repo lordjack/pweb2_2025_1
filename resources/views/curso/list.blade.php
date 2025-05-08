@@ -29,6 +29,7 @@
                 <td>Valor</td>
                 <td>Ação</td>
                 <td>Ação</td>
+                <td>Ação</td>
             </tr>
         </thead>
         <tbody>
@@ -39,9 +40,11 @@
                     <td>{{ $item->requisito }}</td>
                     <td>{{ $item->carga_horaria }}</td>
                     <td>{{ $item->valor}}</td>
-
                     <td>
                         <a href="{{ route('curso.edit', $item->id) }}">Editar</a>
+                    </td>
+                    <td>
+                        <a href="{{ route('curso.turmas', $item->id) }}">Ver Turmas ({{ $item->turmas->count() }})</a>
                     </td>
                     <td>
                         <form action="{{ route('curso.destroy', $item->id) }}" method="post">

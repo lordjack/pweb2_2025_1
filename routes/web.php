@@ -9,41 +9,67 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/aluno',
-    [AlunoController::class,'index'])->name('aluno.index');
+Route::get(
+    '/aluno',
+    [AlunoController::class, 'index']
+)->name('aluno.index');
 
-Route::get('/aluno/create',
-     [AlunoController::class,'create'])->name('aluno.create');
+Route::get(
+    '/aluno/create',
+    [AlunoController::class, 'create']
+)->name('aluno.create');
 
-Route::post('/aluno/store',
-     [AlunoController::class,'store'])->name('aluno.store');
+Route::post(
+    '/aluno/store',
+    [AlunoController::class, 'store']
+)->name('aluno.store');
 
-Route::delete('aluno/{id}',
-     [AlunoController::class,'destroy'])
-     ->name('aluno.destroy');
+Route::delete(
+    'aluno/{id}',
+    [AlunoController::class, 'destroy']
+)
+    ->name('aluno.destroy');
 
-Route::get('/aluno/edit/{id}',
-     [AlunoController::class,'edit'])->name('aluno.edit');
+Route::get(
+    '/aluno/edit/{id}',
+    [AlunoController::class, 'edit']
+)->name('aluno.edit');
 
-Route::put('/aluno/update/{id}',
-     [AlunoController::class,'update'])->name('aluno.update');
+Route::put(
+    '/aluno/update/{id}',
+    [AlunoController::class, 'update']
+)->name('aluno.update');
 
 
-Route::get('/aluno/report',
-     [AlunoController::class,'report'])->name('aluno.report');
+Route::get(
+    '/aluno/report',
+    [AlunoController::class, 'report']
+)->name('aluno.report');
 
 
-Route::post('/curso/search',
-     [CursoController::class,'search'])->name('curso.search');
-Route::get('/curso/report',
-     [CursoController::class,'report'])->name('curso.report');
+Route::post(
+    '/curso/search',
+    [CursoController::class, 'search']
+)->name('curso.search');
+Route::get(
+    '/curso/report',
+    [CursoController::class, 'report']
+)->name('curso.report');
 Route::resource('curso', CursoController::class);
 
-Route::post('/turma/search',
-     [TurmaController::class,'search'])->name('turma.search');
-Route::get('/turma/report',
-     [TurmaController::class,'report'])->name('turma.report');
+Route::post(
+    '/turma/search',
+    [TurmaController::class, 'search']
+)->name('turma.search');
+Route::get(
+    '/turma/report',
+    [TurmaController::class, 'report']
+)->name('turma.report');
 Route::resource('turma', TurmaController::class);
 
 Route::get('/curso/{curso}/turmas', [TurmaController::class, 'index'])->name('curso.turmas');
 Route::get('/curso/{curso}/turmas/create', [TurmaController::class, 'create'])->name('curso.turmas.create');
+Route::post('/turma', [TurmaController::class, 'store'])->name('turma.store');
+Route::get('/turma/{id}/edit', [TurmaController::class, 'edit'])->name('turma.edit');
+Route::put('/turma/{id}', [TurmaController::class, 'update'])->name('turma.update');
+Route::delete('/turma/{id}', [TurmaController::class, 'destroy'])->name('turma.destroy');

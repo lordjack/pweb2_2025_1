@@ -25,9 +25,9 @@ class TurmaController extends Controller
         $this->validateRequest($request);
 
         $data = $request->all();
-        Turma::create($data);
+        $turma = Turma::create($data);
 
-        return redirect('turma');
+        return redirect()->route('curso.turmas', $turma->curso_id);
     }
 
     public function edit(string $id)
@@ -46,12 +46,12 @@ class TurmaController extends Controller
         $this->validateRequest($request);
 
         $data = $request->all();
-        Turma::updateOrCreate(
+        $turma = Turma::updateOrCreate(
             ['id' => $id],
             $data
         );
 
-        return redirect('turma');
+        return redirect()->route('curso.turmas', $turma->curso_id);
     }
 
     public function destroy(string $id)
@@ -59,7 +59,7 @@ class TurmaController extends Controller
         $dado = Turma::findOrFail($id);
         $dado->delete();
 
-        return redirect('turma');
+        return redirect()->route('curso.turmas', $dado->curso_id);
     }
 
     private function validateRequest(Request $request)

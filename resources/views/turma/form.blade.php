@@ -1,28 +1,33 @@
 @extends('base')
-@section('titulo', 'Formulário Turma')
+@section('titulo', isset($dado) ? 'Editar Turma' : 'Nova Turma')
 @section('conteudo')
 
-    <h3>Nova Turma - Curso: {{ $curso->nome }}</h3>
+    <h3>{{ isset($dado) ? 'Editar' : 'Nova' }} Turma - Curso: {{ isset($dado) ? $dado->curso->nome : $curso->nome }}</h3>
 
-    <form action="{{ route('turma.store') }}" method="post">
+    @if(isset($dado))
+        <form action="{{ route('turma.update', $dado->id) }}" method="post">
+        @method('PUT')
+    @else
+        <form action="{{ route('turma.store') }}" method="post">
+    @endif
         @csrf
 
-        <input type="hidden" name="curso_id" value="{{ $curso->id }}">
+        <input type="hidden" name="curso_id" value="{{ isset($dado) ? $dado->curso_id : $curso->id }}">
 
         <label for="">Nome</label><br>
-        <input type="text" name="nome" value="{{ old('nome') }}"><br>
+        <input type="text" name="nome" value="{{ isset($dado) ? $dado->nome : old('nome') }}"><br>
 
         <label for="">Código</label><br>
-        <input type="text" name="codigo" value="{{ old('codigo') }}"><br>
+        <input type="text" name="codigo" value="{{ isset($dado) ? $dado->codigo : old('codigo') }}"><br>
 
         <label for="">Data Início</label><br>
-        <input type="date" name="data_inicio" value="{{ old('data_inicio') }}"><br>
+        <input type="date" name="data_inicio" value="{{ isset($dado) ? $dado->data_inicio : old('data_inicio') }}"><br>
 
         <label for="">Data Fim</label><br>
-        <input type="date" name="data_fim" value="{{ old('data_fim') }}"><br>
+        <input type="date" name="data_fim" value="{{ isset($dado) ? $dado->data_fim : old('data_fim') }}"><br>
 
         <button type="submit">Salvar</button><br>
-        <a href="{{ route('curso.turmas', $curso->id) }}">Voltar</a>
+        <a href="{{ route('curso.turmas', isset($dado) ? $dado->curso_id : $curso->id) }}">Voltar</a>
     </form>
 
 @stop
