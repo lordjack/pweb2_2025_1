@@ -12,7 +12,7 @@
         }
     @endphp
 
-    <form action="{{ $action }}" method="post">
+    <form action="{{ $action }}" method="post" enctype="multipart/form-data">
         @csrf
 
         @if (!empty($dado->id))

@@ -1,8 +1,8 @@
 @extends('base')
-@section('titulo', 'Listagem Aluno')
+@section('titulo', 'Listagem de Turmas - Curso')
 @section('conteudo')
 
-    <h3>Listagem de Curso</h3>
+    <h3>Listagem de Turmas - Curso {{ $curso->nome }}</h3>
 
     <form action="{{ route('curso.search') }}" method="post">
         @csrf
@@ -14,8 +14,8 @@
         </select><br>
         <input type="text" name="valor" placeholder="Valor">
         <button type="submit">Buscar</button>
-        <a href="{{ url('curso/create') }}">Novo</a>
-        <a href="{{ url('curso/report') }}">Gerar PDF</a>
+        <a href="{{ route('curso.turmas.create', $curso->id) }}">Novo</a>
+        <a href="{{ route('curso.index') }}">Voltar para Curso</a>
 
     </form>
 
@@ -36,17 +36,15 @@
                 <tr>
                     <td>{{ $item->id }}</td>
                     <td>{{ $item->nome }}</td>
-                    <td>{{ $item->requisito }}</td>
-                    <td>{{ $item->carga_horaria }}</td>
-                    <td>{{ $item->valor }}</td>
+                    <td>{{ $item->codigo }}</td>
+                    <td>{{ date('d/m/Y', strtotime($item->data_inicio)) }}</td>
+                    <td>{{ date('d/m/Y', strtotime($item->data_fim)) }}</td>
 
-                    <td><a href="{{ route('curso.turmas', $item->id) }}">
-                        Ver Turmas ({{ $item->turmas->count() }})</a></td>
                     <td>
-                        <a href="{{ route('curso.edit', $item->id) }}">Editar</a>
+                        <a href="{{ route('turma.edit', $item->id) }}">Editar</a>
                     </td>
                     <td>
-                        <form action="{{ route('curso.destroy', $item->id) }}" method="post">
+                        <form action="{{ route('turma.destroy', $item->id) }}" method="post">
                             @method('DELETE')
                             @csrf
                             <button type="submit" onclick="return confirm('Deseja remover o registro?')">Remover</button>
