@@ -21,10 +21,11 @@
         <input type="text" name="codigo" value="{{ isset($dado) ? $dado->codigo : old('codigo') }}"><br>
 
         <label for="">Data Início</label><br>
-        <input type="date" name="data_inicio" value="{{ isset($dado) ? $dado->data_inicio : old('data_inicio') }}"><br>
+        <input type="date" name="data_inicio" value="{{ isset($dado) ? \Carbon\Carbon::parse($dado->data_inicio)->format('Y-m-d') : old('data_inicio') }}"><br>
 
         <label for="">Data Fim</label><br>
-        <input type="date" name="data_fim" value="{{ isset($dado) ? $dado->data_fim : old('data_fim') }}"><br>
+        <input type="date" name="data_fim" value="{{ isset($dado) ? \Carbon\Carbon::parse($dado->data_fim)->format('Y-m-d') : old('data_fim') }}"><br>
+
 
         <button type="submit">Salvar</button><br>
         <a href="{{ route('curso.turmas', isset($dado) ? $dado->curso_id : $curso->id) }}">Voltar</a>

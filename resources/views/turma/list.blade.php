@@ -35,8 +35,8 @@
                     <td>{{ $item->id }}</td>
                     <td>{{ $item->nome }}</td>
                     <td>{{ $item->codigo }}</td>
-                    <td>{{ $item->data_inicio }}</td>
-                    <td>{{ $item->data_fim }}</td>
+                    <td>{{ date('d/m/Y', strtotime($item->data_inicio)) }}</td>
+                    <td>{{ date('d/m/Y', strtotime($item->data_fim)) }}</td>
                     <td>
                         <a href="{{ route('turma.edit', $item->id) }}">Editar</a>
                         <form action="{{ route('turma.destroy', $item->id) }}" method="post" style="display: inline;">
