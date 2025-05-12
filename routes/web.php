@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-
+/*
 Route::get(
     '/aluno',
     [AlunoController::class, 'index']
@@ -40,11 +40,23 @@ Route::put(
     [AlunoController::class, 'update']
 )->name('aluno.update');
 
-
+Route::post(
+    '/aluno/search',
+    [TurmaController::class, 'search']
+)->name('aluno.search');
+*/
 Route::get(
     '/aluno/report',
     [AlunoController::class, 'report']
 )->name('aluno.report');
+
+Route::post(
+    '/aluno/search',
+    [TurmaController::class, 'search']
+)->name('aluno.search');
+
+//cria todas as rotas create,store, edit, update, index e delete
+Route::resource('aluno', AlunoController::class);
 
 
 Route::post(
