@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('alunos', function (Blueprint $table) {
+        Schema::table('aluno', function (Blueprint $table) {
             $table->string('imagem', 150)->nullable()->after('categoria_id');
         });
     }

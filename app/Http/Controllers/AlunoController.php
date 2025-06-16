@@ -6,6 +6,7 @@ use App\Models\CategoriaAluno;
 use Illuminate\Http\Request;
 use App\Models\Aluno;
 use Barryvdh\DomPDF\Facade\Pdf;
+use App\Charts\QtdAlunosChart;
 
 class AlunoController extends Controller
 {
@@ -181,5 +182,10 @@ class AlunoController extends Controller
 
         $pdf = Pdf::loadView('aluno.report', $data);
         return $pdf->download('relatorio_listagem_alunos.pdf');
+    }
+
+    public function chart(QtdAlunosChart $chart){
+
+        return view('aluno.chart', ['chart' => $chart->build()]);
     }
 }

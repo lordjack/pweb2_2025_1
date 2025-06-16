@@ -50,6 +50,11 @@ Route::get(
     [AlunoController::class, 'report']
 )->name('aluno.report');
 
+Route::get(
+    '/aluno/chart',
+    [AlunoController::class, 'chart']
+)->name('aluno.chart');
+
 Route::post(
     '/aluno/search',
     [TurmaController::class, 'search']

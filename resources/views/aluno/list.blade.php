@@ -16,6 +16,7 @@
         <button type="submit">Buscar</button>
         <a href="{{ url('aluno/create') }}">Novo</a>
         <a href="{{ url('aluno/report') }}">Gerar PDF</a>
+        <a href="{{ url('aluno/chart') }}" target="_blank">Gerar Gráfico</a>
 
     </form>
 
